@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<style>
+  #myInput {
+  background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+  background-position: 10px 12px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  width: 100%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+}
+
+#myTable {
+  border-collapse: collapse; /* Collapse borders */
+  width: 100%; /* Full-width */
+  border: 1px solid #ddd; /* Add a grey border */
+  font-size: 18px; /* Increase font-size */
+}
+
+#myTable th, #myTable td {
+  text-align: left; /* Left-align text */
+  padding: 12px; /* Add padding */
+}
+
+#myTable tr {
+  /* Add a bottom border to all table rows */
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  /* Add a grey background color to the table header and on hover */
+  background-color: #f1f1f1;
+}
+.main{
+  margin: 50px;
+  background-color: #2C3639;
+  border: 5px solid grey;
+}
+
+.nav-bar{
+  word-spacing: 40px;
+  font-size: 20px;
+  font-family: arial;
+}
+
+.nav-bar ul li a{
+  text-decoration: none;
+  color: white;
+}
+
+.nav-bar ul li{
+  display: inline-block;
+  -webkit-transition: border 1s, border-radius 1s, padding 1s, background-color 1s, color 1s;
+}
+
+.nav-bar ul li:hover{
+  border-bottom: 2px solid gray;
+  border-radius: 10%;
+  padding: 10px;
+  background-color: #2C3639;
+  color: white;
+}
+
+</style>
+<script>
+      function myFunction() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+<body>
+  <div class="main">
+      <nav class="nav-bar">
+        <ul>
+          <li><a href="{{url_for('index')}}">Accueil</a></li>
+        </ul>
+      </nav>
+  </div>
+
+  <div>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+    <table id="myTable">
+      <tr class="header">
+        {% for header in headings %}
+        <th>{{ header }}</th>
+        {% endfor %}
+      </tr>
+
+      {% for row in data %}
+      <tr>
+        {% for cell in row %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+      <tr>
+        <td>Alfreds Futterkiste</td>
+        <td>Germany</td>
+      </tr>
+      <tr>
+        <td>Berglunds snabbkop</td>
+        <td>Sweden</td>
+      </tr>
+      <tr>
+        <td>Island Trading</td>
+        <td>UK</td>
+      </tr>
+      <tr>
+        <td>Koniglich Essen</td>
+        <td>Germany</td>
+      </tr>
+    </table>
+  </div>
+
+</body>
+</html>
